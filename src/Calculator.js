@@ -6,12 +6,28 @@ class Calculator extends React.Component {
     displayValue: "0"
   };
 
+  clearDisplay() {
+    this.setState({
+      displayValue: "0"
+    });
+  }
   inputDigit(digit) {
     const { displayValue } = this.state;
 
     this.setState({
-      displayValue: String(digit)
+      displayValue: displayValue === "0" ? String(digit) : displayValue + digit
     });
+  }
+
+  inputDot() {
+    const { displayValue } = this.state;
+
+    // check for decimal in state
+    if (displayValue.indexOf(".") === -1) {
+      this.setState({
+        displayValue: displayValue + "."
+      });
+    }
   }
   render() {
     const { displayValue } = this.state;
@@ -21,7 +37,12 @@ class Calculator extends React.Component {
         <div className="calculator-keypad">
           <div className="input-key">
             <div className="function-keys">
-              <button className="calculator-key key-clear">AC</button>
+              <button
+                className="calculator-key key-clear"
+                onClick={() => this.clearDisplay()}
+              >
+                AC
+              </button>
               <button className="calculator-key key-sign">+</button>
               <button className="calculator-key key-percent">%</button>
             </div>
@@ -32,7 +53,12 @@ class Calculator extends React.Component {
               >
                 0
               </button>
-              <button className="calculator-key key-dot">.</button>
+              <button
+                className="calculator-key key-dot"
+                onClick={() => this.inputDot()}
+              >
+                .
+              </button>
               <button
                 className="calculator-key key-1"
                 onClick={() => this.inputDigit(1)}
