@@ -29,6 +29,25 @@ class Calculator extends React.Component {
       });
     }
   }
+  inputPercent() {
+    const { displayValue } = this.state;
+    const value = parseFloat(displayValue);
+
+    this.setState({
+      displayValue: value / 100
+    });
+  }
+
+  toggleSign() {
+    const { displayValue } = this.state;
+
+    this.setState({
+      displayValue:
+        displayValue.charAt(0) === "-"
+          ? displayValue.substr(1)
+          : "-" + displayValue
+    });
+  }
   render() {
     const { displayValue } = this.state;
     return (
@@ -43,8 +62,18 @@ class Calculator extends React.Component {
               >
                 AC
               </button>
-              <button className="calculator-key key-sign">+</button>
-              <button className="calculator-key key-percent">%</button>
+              <button
+                className="calculator-key key-sign"
+                onClick={() => this.toggleSign()}
+              >
+                ±
+              </button>
+              <button
+                className="calculator-key key-percent"
+                onClick={() => this.inputPercent()}
+              >
+                %
+              </button>
             </div>
             <div className="digit-keys">
               <button
@@ -116,11 +145,36 @@ class Calculator extends React.Component {
             </div>
           </div>
           <div className="operator-keys">
-            <button className="calculator-key key-divide">/</button>
-            <button className="calculator-key key-multiply">x</button>
-            <button className="calculator-key key-subtract">-</button>
-            <button className="calculator-key key-add">+</button>
-            <button className="calculator-key key-equals">=</button>
+            <button
+              className="calculator-key key-divide"
+              onClick={() => this.performOperation("/")}
+            >
+              /
+            </button>
+            <button
+              className="calculator-key key-multiply"
+              onClick={() => this.performOperation("x")}
+            >
+              x
+            </button>
+            <button
+              className="calculator-key key-subtract"
+              onClick={() => this.performOperation("-")}
+            >
+              -
+            </button>
+            <button
+              className="calculator-key key-add"
+              onClick={() => this.performOperation("+")}
+            >
+              +
+            </button>
+            <button
+              className="calculator-key key-equals"
+              onClick={() => this.performOperation("=")}
+            >
+              =
+            </button>
           </div>
         </div>
       </div>
